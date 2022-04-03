@@ -1,0 +1,23 @@
+name: 'action-switchbot'
+description: 'Operate SwitchBot using GitHub Actions.'
+author: 'Doarakko'
+branding:
+  icon: toggle-right
+  color: red
+inputs:
+  token:
+    required: true
+    description: 'SwitchBot token'
+  deviceName:
+    required: false
+    description: 'device name'
+  command:
+    required: false
+    default: 'press'
+    description: 'turnOff, turnOn, press'
+  sceneName:
+    required: false
+    description: 'scene name'
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
