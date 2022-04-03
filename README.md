@@ -2,7 +2,7 @@
 
 Operate SwitchBot using GitHub Actions.
 
-https://user-images.githubusercontent.com/21009186/161437327-2bc2b134-c9b3-4a94-b35e-05da12b664ca.MOV
+https://user-images.githubusercontent.com/21009186/161438435-23a94ada-91e6-47b9-a18f-3071a7e8661b.MOV
 
 ## Inputs
 
