@@ -29,13 +29,13 @@ Either `deviceName` or `sceneName` is required.
 
 ## Example usage
 
-If you comment "light on" on the GitHub issue, the light bulb will illuminate.
+If PR is approved, the light bulb will illuminate.
 
 ```yaml
-name: Turn on the light on GitHub issue
+name: Turn on the light
 on:
-  issue_comment:
-    types: [created]
+  pull_request_review:
+    types: [submitted]
 
 jobs:
   turn-on:
@@ -43,8 +43,6 @@ jobs:
     steps:
       - name: Turn on the light
         uses: Doarakko/action-switchbot@main
-        if: >-
-          contains(github.event.comment.body, 'light on')
         with:
           token: ${{secrets.SWITCHBOT_TOKEN}}
           deviceName: light AA
