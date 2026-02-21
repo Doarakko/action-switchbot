@@ -7,9 +7,6 @@ updates:
     groups:
       development:
         patterns:
-          - "eslint*"
-          - "@typescript-eslint/*"
-          - "prettier*"
           - "@types/*"
           - "jest*"
           - "ts-jest*"
