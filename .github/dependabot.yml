@@ -1,11 +1,24 @@
 version: 2
 updates:
-  - package-ecosystem: github-actions
-    directory: /
+  - package-ecosystem: "npm"
+    directory: "/"
     schedule:
-      interval: weekly
+      interval: "monthly"
+    groups:
+      development:
+        patterns:
+          - "eslint*"
+          - "@typescript-eslint/*"
+          - "prettier*"
+          - "@types/*"
+          - "jest*"
+          - "ts-jest*"
 
-  - package-ecosystem: npm
-    directory: /
+  - package-ecosystem: "github-actions"
+    directory: "/"
     schedule:
-      interval: weekly
+      interval: "monthly"
+    groups:
+      all-actions:
+        patterns:
+          - "*"
