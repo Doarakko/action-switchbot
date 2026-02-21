@@ -129,7 +129,7 @@ function getSceneIdByName(name) {
             }
             throw new Error(`can not find scene: ${name}`);
         }
-        catch (error) {
+        catch (_error) {
             throw new Error('failed to get scence id');
         }
     });
@@ -146,7 +146,7 @@ function getDeviceIdByName(name) {
             }
             throw new Error(`can not find device: ${name}`);
         }
-        catch (error) {
+        catch (_error) {
             throw new Error('failed to get device id');
         }
     });
@@ -157,7 +157,7 @@ function executeScene(id) {
         try {
             yield client.post(`scenes/${id}/execute`);
         }
-        catch (error) {
+        catch (_error) {
             throw new Error(`failed to execute scence id: ${id}`);
         }
     });
@@ -168,7 +168,7 @@ function commandDevice(id, command) {
         try {
             yield client.post(`devices/${id}/commands`, { command });
         }
-        catch (error) {
+        catch (_error) {
             throw new Error(`failed to command device id: ${id}`);
         }
     });

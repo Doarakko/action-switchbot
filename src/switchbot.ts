@@ -42,7 +42,7 @@ export async function getSceneIdByName(name: string): Promise<string> {
     }
 
     throw new Error(`can not find scene: ${name}`);
-  } catch (error) {
+  } catch (_error) {
     throw new Error('failed to get scence id');
   }
 }
@@ -57,7 +57,7 @@ export async function getDeviceIdByName(name: string): Promise<string> {
     }
 
     throw new Error(`can not find device: ${name}`);
-  } catch (error) {
+  } catch (_error) {
     throw new Error('failed to get device id');
   }
 }
@@ -65,7 +65,7 @@ export async function getDeviceIdByName(name: string): Promise<string> {
 export async function executeScene(id: string): Promise<void> {
   try {
     await client.post(`scenes/${id}/execute`);
-  } catch (error) {
+  } catch (_error) {
     throw new Error(`failed to execute scence id: ${id}`);
   }
 }
@@ -76,7 +76,7 @@ export async function commandDevice(
 ): Promise<void> {
   try {
     await client.post(`devices/${id}/commands`, { command });
-  } catch (error) {
+  } catch (_error) {
     throw new Error(`failed to command device id: ${id}`);
   }
 }
