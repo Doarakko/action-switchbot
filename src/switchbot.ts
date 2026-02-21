@@ -1,14 +1,21 @@
 import * as core from '@actions/core';
-import axios from 'axios';
 
-const client = axios.create({
-  baseURL: 'https://api.switch-bot.com/v1.0/',
-  timeout: 1000,
-  headers: {
+const BASE_URL = 'https://api.switch-bot.com/v1.0/';
+
+const TIMEOUT_MS = 1000;
+
+function getHeaders(): Record<string, string> {
+  return {
     Authorization: core.getInput('token'),
     'Content-Type': 'application/json; charset=utf8'
-  }
-});
+  };
+}
+
+function createTimeoutSignal(): AbortSignal {
+  const controller = new AbortController();
+  setTimeout(() => controller.abort(), TIMEOUT_MS);
+  return controller.signal;
+}
 
 type ListSceneResponse = {
   statusCode: number;
@@ -34,7 +41,11 @@ type ListDeviceResponse = {
 
 export async function getSceneIdByName(name: string): Promise<string> {
   try {
-    const { data } = await client.get<ListSceneResponse>('scenes');
+    const response = await fetch(`${BASE_URL}scenes`, {
+      headers: getHeaders(),
+      signal: createTimeoutSignal()
+    });
+    const data: ListSceneResponse = await response.json();
     for (const element of data.body) {
       if (element.sceneName === name) {
         return element.sceneId;
@@ -49,7 +60,11 @@ export async function getSceneIdByName(name: string): Promise<string> {
 
 export async function getDeviceIdByName(name: string): Promise<string> {
   try {
-    const { data } = await client.get<ListDeviceResponse>('devices');
+    const response = await fetch(`${BASE_URL}devices`, {
+      headers: getHeaders(),
+      signal: createTimeoutSignal()
+    });
+    const data: ListDeviceResponse = await response.json();
     for (const element of data.body.deviceList) {
       if (element.deviceName === name) {
         return element.deviceId;
@@ -64,7 +79,11 @@ export async function getDeviceIdByName(name: string): Promise<string> {
 
 export async function executeScene(id: string): Promise<void> {
   try {
-    await client.post(`scenes/${id}/execute`);
+    await fetch(`${BASE_URL}scenes/${id}/execute`, {
+      method: 'POST',
+      headers: getHeaders(),
+      signal: createTimeoutSignal()
+    });
   } catch (_error) {
     throw new Error(`failed to execute scence id: ${id}`);
   }
@@ -75,7 +94,12 @@ export async function commandDevice(
   command: string
 ): Promise<void> {
   try {
-    await client.post(`devices/${id}/commands`, { command });
+    await fetch(`${BASE_URL}devices/${id}/commands`, {
+      method: 'POST',
+      headers: getHeaders(),
+      body: JSON.stringify({ command }),
+      signal: createTimeoutSignal()
+    });
   } catch (_error) {
     throw new Error(`failed to command device id: ${id}`);
   }
